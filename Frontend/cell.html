@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algae Counter | ระบบนับเซลล์สาหร่ายอัตโนมัติ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <link rel="stylesheet" href="cell.css"> 
+    
+    <style>
+        .landing-container {padding: 80px 20px; text-align: center;}
+        .hero-section h1 { font-size: 4.5rem; color: white; text-shadow: 0 0 20px var(--shadow-color); margin-bottom: 5px; }
+        .hero-section h1 span { color: var(--accent-color); }
+        .hero-section p.lead { font-size: 1.5rem; opacity: 0.9; max-width: 800px; margin: 20px auto 40px; }
+        .cta-button { background-color: var(--secondary-accent); color: white; border: none; border-radius: 50px; padding: 15px 40px; font-size: 1.3rem; font-weight: 600; box-shadow: 0 6px 15px rgba(139, 96, 211, 0.5); transition: transform 0.3s ease; display: inline-block; margin-bottom: 50px; }
+        .cta-button:hover { background-color: #7a50b3; transform: translateY(-3px); box-shadow: 0 8px 20px rgba(139, 96, 211, 0.7); }
+        #upload-section { padding: 50px 0; max-width: 1000px; margin: 0 auto 50px; background: rgba(255, 255, 255, 0.08); border-radius: 20px; backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5); }
+        #upload-section h2 { color: var(--accent-color); font-size: 2.5rem; margin-bottom: 30px; }
+        .upload-content { display: flex; gap: 30px; padding: 0 30px; text-align: left; }
+        .drop-zone-container { flex: 2; background: rgba(0, 0, 0, 0.2); border: 2px dashed var(--secondary-accent); border-radius: 15px; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; transition: background-color 0.3s; }
+        .drop-zone-container i { font-size: 3rem; color: var(--secondary-accent); margin-bottom: 15px; }
+        #algae-image-upload { display: none; }
+        .file-upload-label { background-color: var(--accent-color); color: var(--main-bg); padding: 10px 25px; border-radius: 50px; cursor: pointer; font-weight: 600; margin-top: 15px; display: inline-block; }
+        .process-button { background-color: var(--secondary-accent); color: white; border: none; border-radius: 50px; padding: 12px 30px; font-size: 1.2rem; font-weight: 600; margin-top: 20px; }
+        .process-button:disabled { background-color: #444; cursor: not-allowed; }
+        .upload-info { flex: 1; padding: 10px; display: flex; flex-direction: column; justify-content: center; }
+        .stats-card { background: rgba(255, 255, 255, 0.08); border-radius: 20px; backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); padding: 30px; max-width: 900px; margin: 50px auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .stat-item { text-align: center; border-right: 1px solid rgba(255, 255, 255, 0.2); padding: 0 10px; }
+        .stat-item:last-child { border-right: none; }
+        .stat-item .value { font-size: 3.5rem; font-weight: 700; color: var(--secondary-accent); margin-bottom: 5px; }
+        .stat-item .label { font-size: 1.1rem; opacity: 0.8; text-transform: uppercase; }
+        .stat-footer {grid-column: 1 / span 3; margin-top: 20px; font-size: 0.9rem; color: #ccc; opacity: 0.8; text-align: center; }
+        .history-section { padding: 20px 0; max-width: 1000px; margin: 50px auto; text-align: left; }
+        .history-section h2 { font-size: 2rem; color: var(--accent-color); margin-bottom: 20px; border-bottom: 2px solid rgba(255, 255, 255, 0.1); padding-bottom: 5px; }
+        .history-table { width: 100%; border-collapse: collapse; background-color: rgba(0, 0, 0, 0.3); border-radius: 10px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); }
+        .history-table th, .history-table td { padding: 12px 15px; text-align: left; border-bottom: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-color); }
+        .history-table th { background-color: rgba(93, 156, 236, 0.15); color: var(--accent-color); font-weight: 600; text-transform: uppercase; }
+        @media (max-width: 992px) {
+            .hero-section h1 { font-size: 3.5rem; }
+            .stats-card, .features-grid { grid-template-columns: 1fr; }
+            .upload-content { flex-direction: column; }
+            .stat-item { border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 20px; }
+            .stat-footer { grid-column: 1 / span 1; }}
+    </style>
+</head>
+<body>
+    
+    <div class="background-animation"></div>
+
+    <div id="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        
+        <a href="#upload-section" class="active-link"><i class="fas fa-upload"></i> 1. Upload & Analyze</a>
+        <a href="knowledge.html"><i class="fas fa-book-reader"></i> 2. Algae Knowledge</a>
+
+    </div>
+
+    <button class="openbtn" onclick="openNav()">&#9776;</button>
+
+    <div class="main-center-wrapper">
+        <div class="main-content">
+            <main class="landing-container">
+                
+                <section class="hero-section">
+                    <h1>Algae Cell <span>Counter AI</span></h1>
+                    <p class="lead">ระบบวิเคราะห์และนับเซลล์สาหร่ายอัตโนมัติ แม่นยำ รวดเร็ว และแสดงผลลัพธ์พร้อมประวัติในหน้าเดียว</p>
+                    
+                    <a href="#upload-section" class="cta-button">
+                        <i class="fas fa-cog me-2"></i> เริ่มการวิเคราะห์ภาพทันที
+                    </a>
+                </section>
+
+                <section id="upload-section">
+                    <h2>อัปโหลดและประมวลผลภาพ</h2>
+                    <div class="upload-content">
+                        
+                        <div class="drop-zone-container">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>ลากและวางไฟล์ภาพที่นี่</p>
+                            <p class="text-muted small">หรือ</p>
+                            
+                            <label for="algae-image-upload" class="file-upload-label">
+                                <i class="fas fa-folder-open"></i> เลือกไฟล์จากเครื่อง
+                            </label>
+                            <input type="file" id="algae-image-upload" accept="image/png, image/jpeg, image/tiff">
+
+                            <p id="file-name-display" style="margin-top: 15px; color: var(--accent-color); font-weight: 600;">ยังไม่มีไฟล์ที่เลือก</p>
+
+                            <button id="process-button" class="process-button" disabled>
+                                <i class="fas fa-magic"></i> ประมวลผลและแสดงผล
+                            </button>
+                            <small id="process-status" class="text-muted" style="margin-top: 5px;">รองรับไฟล์: JPG, PNG, TIFF | โมเดล: YOLOv8</small>
+                        </div>
+
+                        <div class="image-preview-area">
+                            <h4><i class="fas fa-image me-2"></i> ภาพผลลัพธ์การตรวจจับ</h4>
+                            <img id="result-image-preview" src="" alt="Image Preview/Result" style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); margin-top: 20px; display: none;">
+                            <p id="image-status" style="margin-top: 10px; opacity: 0.7;">อัปโหลดภาพเพื่อเริ่มต้น</p>
+                        </div>
+                        <div class="upload-info">
+                            <h4><i class="fas fa-lightbulb me-2"></i> คำแนะนำ</h4>
+                            <p>หลังเลือกไฟล์และกดปุ่ม <strong>"ประมวลผล"</strong> ระบบจะจำลองการส่งภาพไปประมวลผลบน AI Backend และแสดงผลลัพธ์ใหม่ล่าสุดในส่วนด้านล่างนี้</p>
+                            <ul>
+                                <li><i class="fas fa-check-circle me-1"></i> ภาพถ่ายความละเอียดสูงจากกล้องจุลทรรศน์</li>
+                                <li><i class="fas fa-check-circle me-1"></i> โฟกัสที่ชัดเจน</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </section>
+                
+                <section class="stats-card">
+                    
+                    <div class="stat-item">
+                        <div class="value"><span id="total-cells">0</span></div>
+                        <div class="label">จำนวนเซลล์รวมล่าสุด</div>
+                    </div>
+                    
+                    <div class="stat-item">
+                        <div class="value"><span id="cell-density">0</span></div>
+                        <div class="label">ความหนาแน่นล่าสุด (Cells/mL)</div>
+                    </div>
+                    
+                    <div class="stat-item">
+                        <div class="value"><span id="accuracy">95.2</span>%</div>
+                        <div class="label">ความแม่นยำของโมเดล</div>
+                    </div>
+                    
+                    <div class="stat-footer">
+                        ข้อมูลล่าสุดอัปเดต: <span id="last-update">กำลังโหลด...</span>
+                    </div>
+                </section>
+
+                <section class="history-section">
+                    <h2><i class="fas fa-history"></i> ประวัติผลการวิเคราะห์ล่าสุด</h2>
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th># ID</th>
+                                <th>วันที่วิเคราะห์</th>
+                                <th>ไฟล์ภาพ</th>
+                                <th>จำนวนเซลล์รวม</th>
+                                <th>ความหนาแน่น (Cells/mL)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-table-body">
+                            <tr><td colspan="5" style="text-align: center;">กำลังโหลดข้อมูลประวัติ...</td></tr>
+                        </tbody>
+                    </table>
+                </section>
+                
+                <section class="features-grid">
+                    </section>
+                
+            </main>
+        </div>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    function openNav() {
+        document.getElementById("sidebar").classList.add('active');}
+    function closeNav() {
+        document.getElementById("sidebar").classList.remove('active');}
+
+    const uploadInput = document.getElementById('algae-image-upload');
+    const processButton = document.getElementById('process-button');
+    const fileNameDisplay = document.getElementById('file-name-display');
+    const processStatus = document.getElementById('process-status');
+    const dropZoneContainer = document.querySelector('.drop-zone-container');
+    const resultImagePreview = document.getElementById('result-image-preview');
+    const imageStatus = document.getElementById('image-status');
+    let selectedFile = null;
+
+    uploadInput.addEventListener('change', function(e) {
+        selectedFile = e.target.files[0];
+        if (selectedFile) {
+            fileNameDisplay.textContent = 'ไฟล์ที่เลือก: ' + selectedFile.name;
+            processButton.disabled = false;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+                resultImagePreview.src = e.target.result;
+                resultImagePreview.style.display = 'block';
+                imageStatus.textContent = "ภาพต้นฉบับ";
+            }
+            reader.readAsDataURL(selectedFile);
+        } else {
+            fileNameDisplay.textContent = 'ยังไม่มีไฟล์ที่เลือก';
+            processButton.disabled = true;
+            resultImagePreview.style.display = 'none';
+            imageStatus.textContent = "อัปโหลดภาพเพื่อเริ่มต้น";
+        }
+        processStatus.innerHTML = 'รองรับไฟล์: JPG, PNG, TIFF | โมเดล: YOLOv8';
+    });
+    dropZoneContainer.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZoneContainer.classList.add('dragover');
+    });
+    dropZoneContainer.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        dropZoneContainer.classList.remove('dragover');
+    });
+    dropZoneContainer.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZoneContainer.classList.remove('dragover');
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+        uploadInput.files = files; 
+        uploadInput.dispatchEvent(new Event('change'));
+        }
+    });
+
+    processButton.addEventListener('click', function() {
+        if (!selectedFile) return;
+
+        processButton.disabled = true;
+        processButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> กำลังประมวลผล...';
+        processStatus.textContent = `กำลังส่งไฟล์ ${selectedFile.name} ไปยัง Backend เพื่อประมวลผล YOLO...`;
+        imageStatus.textContent = "กำลังโหลดผลลัพธ์...";
+
+        const reader = new FileReader();
+        reader.onloadend = function () {
+            const base64data = reader.result; 
+                        const payload = {
+                image_base64: base64data,
+                mode: "yolo" 
+            };
+            fetch("https://g6weds.consolutechcloud.com/backend/predict", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload) 
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Server responded with status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.image_base64) { 
+                    resultImagePreview.src = data.image_base64;
+                    resultImagePreview.style.display = 'block';
+                    imageStatus.textContent = "ภาพผลลัพธ์การตรวจจับ";
+                }
+                updateResultsFromBackend(data);
+                
+                let cellCount = (data.detected && Array.isArray(data.detected)) ? data.detected.length : 'N/A';
+                processStatus.textContent = `การประมวลผลสำเร็จ! ตรวจพบ ${cellCount} เซลล์`;
+                processButton.innerHTML = '<i class="fas fa-magic"></i> ประมวลผลและแสดงผล';
+                processButton.disabled = false;
+                document.querySelector('.stats-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            })
+            .catch(error => {
+                console.error('Error during image processing:', error);
+                processStatus.textContent = `เกิดข้อผิดพลาดในการประมวลผล: ${error.message}`;
+                imageStatus.textContent = "เกิดข้อผิดพลาดในการโหลดผลลัพธ์";
+                processButton.innerHTML = '<i class="fas fa-exclamation-triangle"></i> ประมวลผลล้มเหลว';
+                processButton.disabled = false;
+            });
+        };
+
+        reader.readAsDataURL(selectedFile); 
+ });
+
+    function updateResultsFromBackend(data) {
+        const totalCellsEl = document.getElementById('total-cells');
+        const densityEl = document.getElementById('cell-density');
+        const accuracyEl = document.getElementById('accuracy');
+        const updateEl = document.getElementById('last-update');
+        let cellCount = (data.detected && Array.isArray(data.detected)) ? data.detected.length : 
+                         (data.total_cells !== undefined ? data.total_cells : 'N/A');
+
+        totalCellsEl.textContent = cellCount !== 'N/A' ? cellCount.toLocaleString('en-US') : 'N/A';
+        densityEl.textContent = data.density_cells_ml !== undefined ? data.density_cells_ml.toLocaleString('en-US') : 'N/A';
+        accuracyEl.textContent = data.accuracy_model !== undefined ? data.accuracy_model : document.getElementById('accuracy').textContent; 
+        updateEl.textContent = new Date().toLocaleString('th-TH'); 
+    }
+
+    function fetchLatestData() {
+        const totalCellsEl = document.getElementById('total-cells');
+        const densityEl = document.getElementById('cell-density');
+        const accuracyEl = document.getElementById('accuracy'); 
+        const updateEl = document.getElementById('last-update');
+        const resultImagePreview = document.getElementById('result-image-preview');
+        const imageStatus = document.getElementById('image-status');
+
+
+        updateEl.textContent = "กำลังโหลด..."; 
+        accuracyEl.textContent = "N/A";
+
+        fetch('data/algae_data.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('ไม่พบไฟล์ข้อมูลล่าสุด (algae_data.json)');}
+            return response.json();
+     })
+     .then(data => {
+            if (data.total_cells) { totalCellsEl.textContent = data.total_cells.toLocaleString('en-US');}
+            if (data.density_cells_ml) { densityEl.textContent = data.density_cells_ml.toLocaleString('en-US');}
+            if (data.accuracy_model) { accuracyEl.textContent = data.accuracy_model;}
+            if (data.last_updated) { updateEl.textContent = data.last_updated;}
+            if (data.last_image_base64) {
+                resultImagePreview.src = data.last_image_base64;
+                resultImagePreview.style.display = 'block';
+                imageStatus.textContent = "ภาพผลลัพธ์ล่าสุดจากประวัติ";
+     } 
+    })
+    .catch(error => {
+            console.error("เกิดข้อผิดพลาดในการโหลดข้อมูลสถิติล่าสุด:", error);
+            totalCellsEl.textContent = "N/A";
+            densityEl.textContent = "N/A";
+            updateEl.textContent = "ไม่สามารถโหลดข้อมูลล่าสุดได้";
+            imageStatus.textContent = "อัปโหลดภาพเพื่อเริ่มต้น";
+        });
+    }
+     function fetchHistoryData() {
+        const tableBody = document.getElementById('history-table-body');
+        tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center;">กำลังโหลดข้อมูลประวัติ...</td></tr>'; 
+
+        fetch('data/analysis_history.json')
+        .then(response => {
+            if (!response.ok) { throw new Error('ไม่พบไฟล์ข้อมูลประวัติ (analysis_history.json)');}
+            return response.json(); })
+        .then(history => {
+            tableBody.innerHTML = ''; 
+            if (history.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center;">ไม่พบประวัติการวิเคราะห์</td></tr>';
+                return;}
+            history.forEach(item => {
+                const row = tableBody.insertRow();
+                row.innerHTML = `
+                    <td>${item.id}</td>
+                    <td>${item.date}</td>
+                    <td>${item.file}</td>
+                    <td style="font-weight: bold;">${item.total_cells.toLocaleString('en-US')}</td>
+                    <td>${item.density_cells_ml.toLocaleString('en-US')}</td>
+                `; });
+         })
+        .catch(error => {
+            console.error("เกิดข้อผิดพลาดในการโหลดประวัติ:", error);
+            tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #ff6b6b;">เกิดข้อผิดพลาดในการโหลดข้อมูลประวัติ</td></tr>';
+             });
+    }
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        fetchLatestData();
+        fetchHistoryData(); });
+</script>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>จุลสัณฐานวิทยาเซลล์สาหร่าย (Microalgae Cell Ultrastructure)</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="cell.css"> 
+    
+    <style>
+        .references-section h2 {color: var(--accent-color); border-bottom: 2px solid var(--accent-color); }
+        .references-section ol {padding-left: 0;  list-style: none;}
+        .references-section ol li {margin-bottom: 25px;  font-size: 0.95rem; padding-left: 40px;  position: relative;}
+        .reference-link {color: var(--text-color);  display: block; text-decoration: none; transition: color 0.3s;}
+        .reference-link:hover { color: var(--secondary-accent);  text-decoration: underline;}
+        .reference-icon { position: absolute; left: 0; top: 0; font-size: 1.5rem; color: var(--accent-color); }
+        body { padding-top: 0;  padding-bottom: 50px; }
+        .deep-dive-header { text-align: center; padding: 50px 20px 30px;}
+        .deep-dive-header h1 { font-size: 3.5rem;  color: var(--accent-color); text-shadow: 0 0 15px var(--shadow-color); letter-spacing: 1px;}
+        .deep-dive-header p { font-size: 1.1rem; opacity: 0.8; max-width: 900px; margin: 15px auto 0;}
+        .vertical-wide-layout { display: flex; flex-direction: column;  gap: 35px;  padding: 0 30px;}
+        .deep-dive-info-card { background: var(--card-bg);  border-radius: 20px; backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            padding: 30px 50px; transition: transform 0.3s ease, box-shadow 0.3s ease; width: 100%;  box-sizing: border-box;}
+        .deep-dive-info-card:hover {transform: translateY(-5px); box-shadow: 0 12px 40px var(--shadow-color);}
+        .deep-dive-info-card h3 {font-family: 'Josefin Sans', sans-serif; color: var(--secondary-accent); font-size: 2.2rem;  border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px; margin-bottom: 25px; text-align: left; }
+        .deep-dive-info-card h4 { color: white; font-size: 1.4rem; margin-top: 20px; margin-bottom: 15px;}
+        .deep-dive-info-card p, .deep-dive-info-card li { color: var(--text-color); font-size: 1.1rem; line-height: 1.7;}
+        .deep-dive-info-card ul { list-style-type: none; padding-left: 0;}
+        .content-with-image { display: flex; align-items: flex-start; gap: 30px;}
+        .image-container { flex-basis: 35%;  min-width: 250px; text-align: center;}
+        .text-container { flex-basis: 65%; }
+        .deep-dive-info-card img { max-width: 100%; height: auto; margin-top: 15px; margin-bottom: 10px; border-radius: 10px;}
+        .table-deep-dive {
+            width: 100%;
+            margin-top: 25px;
+            border-collapse: collapse;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);}
+        .table-deep-dive th, .table-deep-dive td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            color: white; 
+            font-size: 1rem;}
+        .table-deep-dive th { background-color: var(--sidebar-bg);  color: var(--accent-color);  font-weight: 600;}
+        .table-deep-dive tbody tr:last-child td { border-bottom: none;}
+        .table-deep-dive tbody tr:hover { background-color: rgba(255, 255, 255, 0.1); }
+        .back-to-home-btn {
+            position: absolute; 
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%); 
+            z-index: 10;
+            background-color: var(--accent-color);
+            color: var(--main-bg);
+            border: none;
+            border-radius: 50px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);}
+        .back-to-home-btn:hover { background-color: var(--button-hover-bg);transform: translate(-50%, -3px);}
+        @media (max-width: 992px) {
+            .content-with-image {flex-direction: column;}
+            .image-container, .text-container {flex-basis: 100%;}
+            .deep-dive-header h1 {font-size: 2.5rem;}
+            .deep-dive-info-card {padding: 30px;} }
+    </style>
+</head>
+<body>
+    <div class="background-animation"></div>
+    <div id="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="cell.html"><i class="fas fa-calculator"></i> 1. Algae Counter</a>
+        <a href="knowledge.html" class="active-link"><i class="fas fa-book-reader"></i> 2. Algae Knowledge</a>
+
+    </div>
+    <button class="openbtn" onclick="openNav()">&#9776;</button>
+    <div class="main-center-wrapper">
+        <div class="main-content">
+            <a href="cell.html" class="btn back-to-home-btn">
+                <i class="fas fa-arrow-left me-2"></i> กลับสู่หน้าหลัก
+            </a>
+            <header class="deep-dive-header">
+                <h1><i class="fas fa-dna"></i> จุลสัณฐานวิทยาเซลล์สาหร่าย</h1>
+                <p>การจัดโครงสร้างข้อมูลเชิงลึกเกี่ยวกับเซลล์สาหร่ายขนาดเล็ก (Microalgae Ultrastructure & Biochemistry) ในรูปแบบบล็อกแนวยาวเต็มความกว้างเพื่อความเข้าใจที่เป็นระบบ</p>
+            </header>
+            <main class="vertical-wide-layout">
+                <article class="deep-dive-info-card">
+                    <h3>1. องค์ประกอบภายนอก (Cell Envelope)</h3>
+                    <div class="content-with-image">
+                        <div class="text-container">
+                            <p>โครงสร้างภายนอกกำหนดความทนทานต่อสภาพแวดล้อม และมีความหลากหลายสูงในแต่ละไฟลัม</p>
+                            <h4>ผนังเซลล์ (Cell Wall)</h4>
+                            <ul type="disc">
+                                <li><strong>ไดอะตอม (Diatoms):</strong> มีเปลือกแข็งที่เรียกว่า <strong>ฟรัสทูล (Frustule)</strong> ทำจากซิลิกา (SiO2.nH2O) มีโครงสร้างละเอียดอ่อนและซับซ้อน</li>
+                                <li><strong>คลอโรไฟตา (Chlorophyta):</strong> ผนังมักประกอบด้วย <strong>เซลลูโลส (Cellulose)</strong></li>
+                            </ul>
+                            <h4>แผ่นเปลือก (Pellicle)</h4>
+                            <ul type="disc">
+                                <li>เป็นชั้นโปรตีนยืดหยุ่นใต้เยื่อหุ้มเซลล์ พบในกลุ่มที่ไม่มีผนังเซลล์แข็ง เช่น <strong>ยูกลีนา</strong></li>
+                            </ul>
+                        </div>
+                        <div class="image-container">
+                            <img src="Structure-of-pennate-diatom-frustule.png" class="img-fluid" alt="Diatom Frustule Structure">
+                            <small class="text-muted d-block">ภาพตัวอย่าง Diatom Frustule (เปลือกซิลิกา)</small>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="deep-dive-info-card">
+                    <h3>2. องค์ประกอบภายใน (Organelles and Inclusion Bodies)</h3>
+                    <div class="content-with-image">
+                        <div class="text-container">
+                            <p>โครงสร้างหลักที่ใช้ในการสังเคราะห์แสงและการสะสมพลังงานสำรองเป็นหัวใจของเซลล์สาหร่ายยูคาริโอต</p>
+                            <h4>คลอโรพลาสต์ (Chloroplast)</h4>
+                            <ul type="disc">
+                                <li><strong>ไพรีนอยด์ (Pyrenoid):</strong> โครงสร้างหนาแน่นสำหรับการตรึงคาร์บอน (RuBisCO)</li>
+                                <li><strong>ไทลาคอยด์ (Thylakoids):</strong> เยื่อหุ้มภายในที่บรรจุคลอโรฟิลล์</li>
+                            </ul>
+                            <h4>แหล่งสะสมสำรอง</h4>
+                            <ul type="disc">
+                                <li><strong>หยดไขมัน (Lipid Droplets):</strong> เก็บสะสมไตรกลีเซอไรด์ (TAGs) ในภาวะเครียด</li>
+                                <li><strong>แป้ง (Starch) / ลามินาริน (Laminarin):</strong> คาร์โบไฮเดรตสำรองหลัก</li>
+                            </ul>
+                        </div>
+                        <div class="image-container">
+                            <img src="Ultrastructure-of-microalgae-Emphasis-Type-Chlorophyceae-b-Rodophyceae-and-c.png" class="img-fluid" alt="Microalgae Cell Ultrastructure Diagram">
+                            <small class="text-muted d-block">แผนภาพโครงสร้างภายในเซลล์ยูคาริโอต</small>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="deep-dive-info-card">
+                    <h3>3. ความยืดหยุ่นทางชีวเคมี (Biochemical Plasticity)</h3>                   
+                    <div class="content-with-image">
+                        <div class="text-container">
+                            <p>ความสามารถในการปรับเปลี่ยนเมแทบอลิซึมอย่างรวดเร็วเพื่อตอบสนองต่อสภาวะเครียดเป็นคุณสมบัติเด่น</p>                            
+                            <h4>การสับเปลี่ยนเมแทบอลิซึม</h4>
+                            <ul type="disc">
+                                <li><strong>Nutrient Stress:</strong> การขาด N หรือ P กระตุ้นการชะลอการสร้างโปรตีน</li>
+                                <li><strong>Lipid Accumulation:</strong> พลังงานส่วนเกินจะถูกเปลี่ยนเป็น <strong>TAGs (Triacylglycerides)</strong> เมื่อมีอัตราส่วน C:N สูง</li>
+                            </ul>
+                            <h4>รูปแบบการดำรงชีวิต</h4>
+                            <table class="table-deep-dive">
+                                <thead>
+                                    <tr>
+                                        <th>รูปแบบ</th>
+                                        <th>แหล่งพลังงาน</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>โฟโตออโตโทรฟิก (Photoautotrophic)</strong></td>
+                                        <td>CO2 + แสง (พึ่งพาการสังเคราะห์แสง)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>เฮเทอโรโทรฟิก (Heterotrophic)</strong></td>
+                                        <td>สารอินทรีย์ภายนอก (ในที่มืด)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="image-container">
+                            <img src="Microalgal-metabolic-pathways-ER-Endoplasmic-Reticulum-24.png" class="img-fluid" alt="Microalgae Metabolic Pathways Diagram">
+                            <small class="text-muted d-block">แผนภาพแสดงเส้นทางเมแทบอลิซึม</small>
+                        </div>
+                    </div>
+                </article>
+
+                                           <article class="deep-dive-info-card">
+                                                <h2>🧪 ความท้าทายในการสกัดลิพิดจากสาหร่าย (Cell Disruption & Lipid Extraction)</h2>
+                    <p>บทความวิชาการได้เน้นย้ำว่า การสกัดสารสำคัญโดยเฉพาะ <strong>ลิพิด (Lipids)</strong> ออกจากเซลล์สาหร่ายนั้นถูกขัดขวางโดย <strong>ผนังเซลล์ที่มีความซับซ้อนและแข็งแกร่ง</strong></p>
+                    
+                    <h3>ผนังเซลล์สาหร่ายที่มีลิพิดสูง (Lipid-Rich Microalgae Cell Walls)</h3>
+                    <ul>
+                        <li><i class="fas fa-microscope"></i> ผนังเซลล์เป็นเหมือนอุปสรรคต่อการขนส่งมวลสาร (Mass Transfer) จึงเป็นขั้นตอนที่ต้องใช้พลังงานสูง (Bottleneck) ในกระบวนการผลิตเชื้อเพลิงชีวภาพ</li>
+                        <li><i class="fas fa-flask"></i> องค์ประกอบของผนังเซลล์มีความหลากหลายสูงมาก ขึ้นอยู่กับสายพันธุ์ (เช่น Nannochloropsis, Scenedesmus) และสภาพการเพาะเลี้ยง</li>
+                    </ul>
+                                        <h3>เทคนิคการทำลายผนังเซลล์ (Cell Disruption Techniques)</h3>
+                    <p>การสกัดสารสำคัญจำเป็นต้องทำลายผนังเซลล์ก่อน โดยเทคนิคที่ได้รับความสนใจสูงคือ:</p>
+                    <ul>
+                        <li><i class="fas fa-tools"></i> <strong>วิธีเชิงกล (Mechanical Methods):</strong> เช่น การโม่ด้วยลูกปัด (Bead Milling) และอัลตราโซนิเคชัน (Ultrasonication)</li>
+                        <li><i class="fas fa-seedling"></i> <strong>การใช้เอนไซม์ (Enzymatic Treatment):</strong> เป็นวิธีการที่ดำเนินการภายใต้สภาวะที่อ่อนโยนกว่า (Mild Conditions) ซึ่งช่วยลดความเสี่ยงต่อการเสื่อมสภาพของผลิตภัณฑ์ภายในเซลล์ และเป็นแนวทางที่คุ้มค่าเมื่อมีการจัดการต้นทุนเอนไซม์ที่ดี (เช่น การรีไซเคิลเอนไซม์)</li>
+                    </ul>
+                           </article>
+
+                    
+                
+                 <article class="deep-dive-info-card">
+                                        <h2>🌊 การเพาะเลี้ยงและการสกัดขั้นสูงด้วย Ionic Liquids</h2>
+                    <p>การทบทวนวรรณกรรมนี้มุ่งเน้นที่กระบวนการปลายน้ำ (Downstream Processing) เพื่อใช้ประโยชน์จากสารประกอบมูลค่าสูง (High-Value Bio-compounds) ในสาหร่าย</p>
+                    
+                    <h3>เทคนิคการเพาะเลี้ยงและการเก็บเกี่ยว (Cultivation & Harvesting)</h3>
+                    <p>การเพาะเลี้ยงหลักยังคงใช้บ่อเปิด (Open Pond) และเครื่องปฏิกรณ์ชีวภาพแบบปิด (Photobioreactor) ส่วนการเก็บเกี่ยวที่สำคัญ ได้แก่:</p>
+                    <ul>
+                        <li><i class="fas fa-filter"></i> <strong>การกรอง (Filtration)</strong></li>
+                        <li><i class="fas fa-sync-alt"></i> <strong>การแยกเหวี่ยง (Centrifugation)</strong></li>
+                        <li><i class="fas fa-tint"></i> <strong>การทำให้ตกตะกอน (Flocculation)</strong></li>
+                        <li><i class="fas fa-arrow-up"></i> <strong>การลอยตัว (Flotation)</strong></li>
+                    </ul>
+                    
+                    <h3>บทบาทของ Ionic Liquids (ILs) ในการสกัด</h3>
+                    <p><strong>Ionic Liquids (ILs)</strong> เป็นตัวทำละลายทางเลือกที่มีคุณสมบัติในการปรับแต่ง (Tunable Solvent Properties) ทำให้สามารถสกัดสารชีวภาพมูลค่าสูงที่หลากหลายจากชีวมวลสาหร่ายได้อย่างมีประสิทธิภาพเมื่อเทียบกับวิธีการทั่วไป:</p>
+                    <ul>
+                        <li><i class="fas fa-hand-holding-water"></i> <strong>สารที่สกัดได้:</strong> ลิพิด, คาร์โบไฮเดรต, โปรตีน และสารออกฤทธิ์ทางชีวภาพอื่น ๆ</li>
+                        <li><i class="fas fa-microchip"></i> <strong>เทคนิคที่ใช้ร่วมกับ ILs:</strong> เช่น การสกัดด้วย ILs ที่เสริมด้วยคลื่นไมโครเวฟ (Microwave-assisted IL extraction) หรืออัลตราซาวด์ (Ultrasound-assisted IL extraction)</li>
+                    </ul>
+                    
+                 </article>
+
+                
+                
+                <article class="deep-dive-info-card">
+<section class="knowledge-section references-section">
+    <h2>📖 แหล่งอ้างอิง (References)</h2>
+        <ol>
+        <li>
+            <i class="fas fa-file-alt reference-icon"></i> 
+            <a href="https://www.researchgate.net/publication/386242530_Cell_Walls_of_Lipid-Rich_Microalgae_A_Comprehensive_Review_on_Characterisation_Ultrastructure_and_Enzymatic_Disruption" 
+               target="_blank" class="reference-link">
+                Karatza, P., et al. (2024). <strong>Cell Walls of Lipid-Rich Microalgae: A Comprehensive Review on Characterisation, Ultrastructure, and Enzymatic Disruption</strong>. <strong>Algal Research</strong>, 78, 103350. (ลิงก์ PDF ผ่าน ResearchGate)
+            </a>
+        </li>
+        <li>
+            <i class="fas fa-file-alt reference-icon"></i> 
+            <a href="https://www.tandfonline.com/doi/full/10.1080/21655979.2020.1711626#abstract" 
+               target="_blank" class="reference-link">
+                Tan, J. S., Lee, S. Y., Chew, K. W., Lam, M. K., Lim, J. W., Ho, S.-H., & Show, P. L. (2020). <strong>A review on microalgae cultivation and harvesting, and their biomass extraction processing using ionic liquids</strong>. <strong>Bioengineered</strong>, 11(1), 116–129. DOI: 10.1080/21655979.2020.1711626.
+            </a>
+        </li>
+        <li>
+            <i class="fas fa-book-open reference-icon"></i> 
+            <a href="#" target="_blank" class="reference-link">
+                (โปรดใส่แหล่งอ้างอิงเดิม: ชื่อผู้แต่ง. (ปี). **หัวข้อ** *แหล่งที่มา*. (ลิงก์เต็ม))
+            </a>
+        </li>
+        </ol>
+</section>
+                </article>
+            </main>
+        </div>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function openNav() {
+        document.getElementById("sidebar").classList.add('active');
+        document.querySelector('.openbtn').style.left = "-70px"; }
+    function closeNav() {
+        document.getElementById("sidebar").classList.remove('active');
+        document.querySelector('.openbtn').style.left = "0"; }
+</script>
+</body>
+</html>

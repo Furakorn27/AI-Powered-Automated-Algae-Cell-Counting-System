@@ -1,0 +1,37 @@
+[
+    {
+        "id": 1,
+        "date": "2025/10/05 21:01:36",
+        "file": "analysis_1759672896.png",
+        "total_cells": 24,
+        "density_cells_ml": 240000
+    },
+    {
+        "id": 2,
+        "date": "2025/10/05 21:07:21",
+        "file": "analysis_1759673241.png",
+        "total_cells": 24,
+        "density_cells_ml": 240000
+    },
+    {
+        "id": 3,
+        "date": "2025/10/05 21:12:29",
+        "file": "analysis_1759673549.png",
+        "total_cells": 24,
+        "density_cells_ml": 240000
+    },
+    {
+        "id": 4,
+        "date": "2025/10/05 21:24:58",
+        "file": "analysis_1759674298.png",
+        "total_cells": 39,
+        "density_cells_ml": 390000
+    },
+    {
+        "id": 5,
+        "date": "2025/10/05 21:25:58",
+        "file": "analysis_1759674358.png",
+        "total_cells": 42,
+        "density_cells_ml": 420000
+    }
+]
